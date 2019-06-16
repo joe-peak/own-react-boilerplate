@@ -34,6 +34,7 @@ module.exports = {
     'plugin:react/recommended'
   ],
   globals: {
-    document: false
+    document: false,
+    _: false,
   }
 };

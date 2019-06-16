@@ -36,9 +36,9 @@ const cssLoaders = [
   {
     loader: 'css-loader',
     options: {
-      importLoaders: 1,
+      // importLoaders: 2,
       //关闭css模块，若开启css样式可以避免与其他模块发生耦合和冲突
-      module: false,
+      // module: false,
     },
   },
   {
@@ -75,6 +75,9 @@ module.exports = env => {
         '@fonts': path.resolve(__dirname, '../src/fonts'),
         '@images': path.resolve(__dirname, '../src/images'),
         '@styles': path.resolve(__dirname, '../src/styles'),
+        '@pages': path.resolve(__dirname, '../src/pages'),
+        '@utils': path.resolve(__dirname, '../src/utils'),
+        '@configs': path.resolve(__dirname, '../src/configs'),
       },
       // 配置那些文件的引入可以省略后缀
       extensions: ['.js', '.ts', '.tsx', '.jsx', '.json'],
