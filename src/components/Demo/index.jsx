@@ -1,9 +1,7 @@
 import React, { PureComponent } from 'react';
 
 class Demo extends PureComponent {
-  doClick = () => {
-    alert('Clicked me...');
-  }
+  doClick = () => {}
 
   render() {
     return <button onClick={this.doClick}>Click Me!</button>;

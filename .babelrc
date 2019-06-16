@@ -11,7 +11,7 @@
           "chrome": "67",
           "safari": "11.1",
         },
-        "useBuiltIns": "entry" //按需添加polyfill,把用到的代码都转成低版本浏览器兼容的
+        "useBuiltIns": "usage" //按需添加polyfill,把用到的代码都转成低版本浏览器兼容的
       }
     ],
     "@babel/preset-react"
@@ -21,4 +21,8 @@
     "@babel/plugin-syntax-dynamic-import",
     "@babel/plugin-proposal-class-properties"
   ],
+  "ignore": [
+    "./lib"
+  ],
+  "compact": false,
 }

@@ -4,8 +4,10 @@ import ReactDom from 'react-dom';
 import Demo from '@components/Demo';
 import '@fonts/scss/font-awesome.scss';
 
+
 const getComponentAsync = () => import(/* webpackChunkName:"lodash" */ 'lodash');
 
+const set = new Set();
 class App extends PureComponent {
   state = {
     greeting: '',
@@ -36,4 +38,4 @@ module.hot.accept(App, () => {
   console.log('....');
 });
 
-ReactDom.render(<App />, document.querySelector("#app"));
+ReactDom.render(<App />, document.querySelector('#app'));

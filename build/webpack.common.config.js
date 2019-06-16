@@ -50,8 +50,8 @@ const cssLoaders = [
 module.exports = env => {
   // 生产环境注入抽离css的loader
   if (env.production) {
-      sassLoaders.splice(0, 1, MiniCssExtractPlugin.loader);
-      cssLoaders.splice(0, 1, MiniCssExtractPlugin.loader);
+    sassLoaders.splice(0, 1, MiniCssExtractPlugin.loader);
+    cssLoaders.splice(0, 1, MiniCssExtractPlugin.loader);
   }
 
   return {
@@ -98,10 +98,17 @@ module.exports = env => {
         {
           test: /\.(j|t)sx?$/,
           exclude: /node_modules/,
-          use: [
-            'babel-loader',
-            'eslint-loader'
-          ],
+          loader: 'babel-loader',
+        },
+        {
+          enforce: 'pre',
+          test: /\.(j|t)sx?$/,
+          exclude: /node_modules/,
+          loader: 'eslint-loader',
+          options: {
+            fix: true,
+            cache: true,
+          }
         },
         // 支持加载图片文件
         {
