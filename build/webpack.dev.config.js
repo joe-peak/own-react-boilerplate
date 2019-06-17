@@ -10,6 +10,7 @@ const devConfig = {
   output: {
     //将注入到html中的js文件前面加上地址
     // publicPath: 'http://cdn.com.cn',
+    publicPath: '/',
     // 输出绝对路径
     path: path.resolve(__dirname, '../dist'),
     // 输出的文件名
