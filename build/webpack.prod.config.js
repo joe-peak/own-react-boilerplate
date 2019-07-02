@@ -1,9 +1,12 @@
+const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 const baseConfig = require('./webpack.common.config');
+
+const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
 const prodConfig = {
   mode: 'production',
@@ -23,7 +26,13 @@ const prodConfig = {
   optimization: {
     minimizer: [
       // 压缩css文件
-      new OptimizeCSSAssetsPlugin({})
+      new OptimizeCSSAssetsPlugin({}),
+      // 压缩js文件
+      new UglifyJsPlugin({
+        cache: true,
+        sourceMap: true,
+        parallel: true,
+      }),
     ],
   },
   plugins: [
