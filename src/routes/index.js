@@ -4,7 +4,7 @@ import Users from '@pages/Users';
 import UsersList from '@pages/Users/List';
 import UsersDetail from '@pages/Users/Detail';
 
-const App = () => (
+const Root = () => (
   <BrowserRouter>
     <Switch>
       <Route exact path="/users/list" component={UsersList} />
@@ -15,6 +15,6 @@ const App = () => (
   </BrowserRouter>
 );
 
-export default App;
+export default Root;
 
 

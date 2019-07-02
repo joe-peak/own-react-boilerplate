@@ -1,8 +1,12 @@
 import '@babel/polyfill';
 import React from 'react';
 import ReactDom from 'react-dom';
+import { Provider } from 'react-redux';
 // import Demo from '@components/Demo';
+import { PRODUCTION } from './constants';
 import App from './routes';
+import store from './store';
+
 import '@fonts/scss/font-awesome.scss';
 // import 'antd/dist/antd.css';
 
@@ -33,10 +37,17 @@ import '@fonts/scss/font-awesome.scss';
 //   }
 // }
 
-module.hot &&
-module.hot.accept(App, () => {
-  /* eslint-disable-next-line */
-  console.log('....');
-});
+const renderApp = () => {
+  ReactDom.render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    document.querySelector('#app')
+  );
+};
 
-ReactDom.render(<App />, document.querySelector('#app'));
+if (process.env.NODE_ENV !== PRODUCTION && module.hot) {
+  module.hot.accept(App, renderApp);
+}
+
+renderApp();

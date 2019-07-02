@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const webpackHtmlPlugin = require('html-webpack-plugin');
 const cleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const SpritesmithPlugin = require('webpack-spritesmith');
 
 const sassLoaders = [
   {
@@ -48,10 +49,26 @@ const cssLoaders = [
 ];
 
 module.exports = env => {
+  let minifyHtmlOpts = {};
   // 生产环境注入抽离css的loader
   if (env.production) {
     sassLoaders.splice(0, 1, MiniCssExtractPlugin.loader);
     cssLoaders.splice(0, 1, MiniCssExtractPlugin.loader);
+    minifyHtmlOpts = {
+      minify: {
+        // 移除注释
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true,
+      },
+    }
   }
 
   return {
@@ -167,12 +184,28 @@ module.exports = env => {
         title: 'webpack boilerplate',
         //以index.html为模板，把打包生成的js自动引入到这个html文件中
         template: path.resolve(__dirname, '../src/index.html'),
+        // 生产环境时压缩优化html文件的配置项
+        ...minifyHtmlOpts
       }),
       new cleanWebpackPlugin(),
       // 通过垫片定义全局变量
       new webpack.ProvidePlugin({
-        $: 'jquery', //发现模块中有$字符串，就自动引入iquery,就可以用jquery
+        $: 'jquery', //发现模块中有$字符串，就自动引入iquery, 就可以用jquery
         _join: ['lodash', 'join'], //_join代表lodash里的join方法
+      }),
+      // 自动生成雪碧图
+      new SpritesmithPlugin({
+        src: {
+          cwd: path.resolve(__dirname, 'src/ico'),
+          glob: '*.png'
+        },
+        target: {
+            image: path.resolve(__dirname, 'src/sprites/sprite.png'),
+            css: path.resolve(__dirname, 'src/spritesmith-generated/sprite.styl')
+        },
+        apiOptions: {
+            cssImageRef: "~sprite.png"
+        }
       }),
     ],
     optimization: {
@@ -198,11 +231,21 @@ module.exports = env => {
         name: true,
         // 同步代码走缓存组
         cacheGroups: {
+          // 抽离第三方库
           vendors: {
+            // 指定是node_modules下的第三方包
             test: /[\\/]node_modules[\\/]/,
             //谁优先级大就把打包后的文件放到哪个组
             priority: -10,
-            name: 'vendors.js',
+            // 打包后的文件名，任意命名
+            name: 'common/vendors.js',
+          },
+          // 抽离自定义公共代码
+          utils: {
+            test: /\.js$/,
+            chunks: 'initial',
+            name: 'common/utils',
+            minSize: 0 // 只要超出0字节就生成一个新包
           },
           default: {
             minChunks: 2,
