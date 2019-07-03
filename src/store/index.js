@@ -8,12 +8,10 @@ import reduxThunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 // Redux Starter Kit 简化创建store的设置
 // import { configureStore， getDefaultMiddleware } from 'redux-starter-kit';
-import rootReducer from '../reducers';
+import rootReducer from '../rootReducer';
 import { PRODUCTION } from '../constants';
 
-const preloadedState = {
-  count: 0
-};
+const preloadedState = {};
 const composedEnhancers = composeWithDevTools(applyMiddleware(reduxThunk));
 const store = createStore(rootReducer, preloadedState, composedEnhancers);
 // const store = configureStore({
@@ -24,6 +22,6 @@ const store = createStore(rootReducer, preloadedState, composedEnhancers);
 
 // 热加载
 if (process.env.NODE_ENV !== PRODUCTION && module.hot) {
-  module.hot.accept('../reducers', () => store.replaceReducer(rootReducer));
+  module.hot.accept('../rootReducer', () => store.replaceReducer(rootReducer));
 }
 export default store;

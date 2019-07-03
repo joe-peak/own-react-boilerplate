@@ -1,6 +1,10 @@
-import { INCREASE, DECREASE } from '../actionTypes';
+import { INCREASE, DECREASE } from '../../../actionTypes';
 
-export default (state = {}, action) => {
+const preloadedState = {
+  count: 0
+};
+
+export default (state = preloadedState, action) => {
   switch(action.type) {
   case INCREASE:
     return { count: state.count + action.payload };

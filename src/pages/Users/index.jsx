@@ -35,7 +35,7 @@ const Users = props => {
 </>;
 };
 
-const mapStateToProps = state => state;
+const mapStateToProps = ({ users }) => users;
 const mapDispatchToProps = {
   increase,
   decrease,
