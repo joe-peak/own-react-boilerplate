@@ -34,6 +34,7 @@
       },
       "lodash"
     ],
+    "@babel/plugin-syntax-dynamic-import"
   ],
   "ignore": [
     "./lib"

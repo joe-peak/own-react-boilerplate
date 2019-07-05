@@ -30,8 +30,8 @@ module.exports = {
     'babel',
   ],
   extends: [
-    'eslint:recommended',
-    'plugin:react/recommended'
+    // 'eslint:recommended',
+    // 'plugin:react/recommended'
   ],
   globals: {
     document: false,

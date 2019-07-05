@@ -2,12 +2,19 @@ import React from 'react';
 import { Button } from 'antd';
 import { connect } from 'react-redux';
 import { increase, decrease} from '../../actions';
+import FancyButton from '@components/FancyButton';
+import LogProps from '@components/LogProps';
 
+const ref = React.createRef();
+const FancyButtonHoc = LogProps(FancyButton);
 const Users = props => {
   /* eslint-disable-next-line */
   const { count, decrease, increase } = props;
   const doDecrease = () => decrease(2);
-  const doIncrease = () => increase(1);
+  const doIncrease = () => {
+    increase(1);
+    console.log('ref', ref);
+  };
 
   return <>
   <div>
@@ -31,6 +38,10 @@ const Users = props => {
     <div>
       {count}
     </div>
+    {/* <FancyButton ref={ref}>
+      ForwardRef
+    </FancyButton> */}
+    <FancyButtonHoc ref={ref}>ForwardRefHoc</FancyButtonHoc>
   </div>
 </>;
 };
